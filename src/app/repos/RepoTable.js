@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import {
   DataTable,
@@ -16,6 +15,13 @@ import {
 } from '@carbon/react';
 
 const RepoTable = ({ rows, headers }) => {
+  // Movemos a função para dentro do componente, onde rows está disponível
+  const getRowDescription = (rowId) => {
+    // Aqui usamos o rows da prop que está disponível dentro do componente
+    const row = rows.find(({ id }) => id === rowId);
+    return row ? row.description : '';
+  };
+
   return (
     <DataTable
       rows={rows}
@@ -51,7 +57,7 @@ const RepoTable = ({ rows, headers }) => {
                     ))}
                   </TableExpandRow>
                   <TableExpandedRow colSpan={headers.length + 1}>
-                    <p>Row description</p>
+                    <p>{getRowDescription(row.id)}</p>
                   </TableExpandedRow>
                 </React.Fragment>
               ))}
